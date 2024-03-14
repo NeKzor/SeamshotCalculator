@@ -1,7 +1,10 @@
 // BSP map parsing, adjusted to Portal 2
 // based on https://developer.valvesoftware.com/wiki/Source_BSP_File_Format
 
-const BSP = {};
+import { BinaryParser } from './binary-parser.js'
+import { Vector } from './vector.js'
+
+export const BSP = {};
 
 BSP.LumpHeader = class{
     constructor(data){
@@ -225,6 +228,5 @@ BSP.Map = class{
 }
 
 BSP.parseMap = function (data) {
-    let array = new Uint8Array(data);
-    return new BSP.Map(new BinaryParser(array));
+    return new BSP.Map(new BinaryParser(data));
 }

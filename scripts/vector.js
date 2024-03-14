@@ -1,6 +1,6 @@
 // a small Vector class I made
 
-class Vector{
+export class Vector{
     constructor(x, y, z) {
         if (x instanceof Vector) {
             this.x = x.x;

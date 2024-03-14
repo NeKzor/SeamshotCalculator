@@ -1,8 +1,4 @@
-importScripts(
-    "vector.js",
-    "binary-parser.js",
-    "bsp-parser.js"
-);
+import { Vector } from "./vector.js";
 
 // very dumb logging system idk dont @ me
 const Log = {
@@ -19,23 +15,12 @@ const Log = {
     update: function () {
         let msg = Log._status;
         if (Log._perc > 0) msg += "(" + Log._perc + "%)";
-        postMessage(msg);
+        //postMessage(msg);
     }
 }
 
-onmessage = function (e) {
-    Log.status = "Parsing BSP file...";
-    let map = BSP.parseMap(e.data);
-
-    console.log(map);
-    let seamshots = findSeamshots(map);
-
-    postMessage(seamshots);
-}
-
-
 // very cool and shitty function for finding seamshots
-function findSeamshots(map) {
+export function findSeamshots(map) {
     const PLANE_DIST_ERROR = 0.001;
     const DOT_ERROR = 0.0001;
 
@@ -91,7 +76,7 @@ function findSeamshots(map) {
 
                 // "ya mate im gonna give you some nans for no reason good luck debugging it"
                 if (isNaN(linePoint.x) || isNaN(linePoint.y) || isNaN(linePoint.z)) {
-                    console.error(
+                    throw new Error(
                         "Cannot find an intersection point of two planes: "
                         + "n1=" + n1 + ", n2=" + n2 + ", d1=" + d1 + ", d2=" + d1
                         + ", lineDir=" + lineDir + ", linePoint=" + linePoint
@@ -142,8 +127,6 @@ function findSeamshots(map) {
             }
         }
     }
-
-    console.log(edges);
 
     
     let seamshots = [];

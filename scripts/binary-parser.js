@@ -1,5 +1,5 @@
 // binary parser class that I made to easily deal with reading binary data.
-class BinaryParser{
+export class BinaryParser{
     constructor(buffer){
         if(buffer.constructor === Uint8Array){
             this.buffer = buffer;
