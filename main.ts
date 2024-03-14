@@ -159,8 +159,9 @@ const folder =
 for await (const file of Deno.readDir(folder)) {
   if (file.isFile && file.name.endsWith(".bsp")) {
     const data = await Deno.readFile(folder + file.name);
-    const seams = findSeamshots(BSP.parseMap(data));
-    const cheeses = findCheeseshots(BSP.parseMap(data));
+    const map = BSP.parseMap(data);
+    const seams = findSeamshots(map);
+    const cheeses = findCheeseshots(map);
 
     await outputSeamshotsIntoFile(
       seams,
